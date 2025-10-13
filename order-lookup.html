@@ -3,17 +3,381 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Vị Miên</title>
+    <title>Tra cứu đơn hàng - Vị Miên</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="icon" href="data:,">
-    <link rel="preconnect" href="https://cdn.jsdelivr.net">
-    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
-    <link rel="stylesheet" href="assets/css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brown-primary: #8B4513;
+        --brown-dark: #5C2E0F;
+        --brown-light: #A0522D;
+        --cream: #FFF8E7;
+        --beige: #F5E6D3;
+      }
+      
+      body {
+        font-family: 'Lora', serif;
+        background-color: var(--cream);
+      }
+      
+      h1, h2, h3, h4, h5, h6, .navbar-brand {
+        font-family: 'Playfair Display', serif;
+      }
+      
+      /* Custom Navbar */
+      .navbar-custom {
+        background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-dark) 100%);
+        padding: 1rem 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      
+      .navbar-custom .navbar-brand {
+        color: var(--cream);
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      
+      .navbar-custom .nav-link {
+        color: var(--cream);
+        font-weight: 500;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .navbar-custom .nav-link:hover {
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      
+      .navbar-custom .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: var(--cream);
+        transition: width 0.3s ease;
+      }
+      
+      .navbar-custom .nav-link:hover::after {
+        width: 80%;
+      }
+      
+      .navbar-custom .navbar-toggler {
+        border-color: var(--cream);
+      }
+      
+      .navbar-custom .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFF8E7' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+      
+      .dropdown-menu {
+        background-color: var(--brown-dark);
+        border: none;
+      }
+      
+      .dropdown-item {
+        color: var(--cream);
+      }
+      
+      .dropdown-item:hover {
+        background-color: var(--brown-primary);
+        color: #fff;
+      }
+      
+      /* Page Header */
+      .page-header {
+        background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+        padding: 3rem 0;
+        margin-bottom: 2rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+          repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(139, 69, 19, 0.03) 35px, rgba(139, 69, 19, 0.03) 70px);
+        pointer-events: none;
+      }
+      
+      .page-header .container {
+        position: relative;
+        z-index: 1;
+      }
+      
+      .page-header h1 {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+      }
+      
+      .page-header p {
+        color: var(--brown-primary);
+        font-size: 1.1rem;
+        margin-bottom: 0;
+      }
+      
+      /* Search Card */
+      .search-card {
+        background: white;
+        border: 2px solid #e0d5c7;
+        border-radius: 12px;
+        padding: 2rem;
+        box-shadow: 0 4px 6px rgba(139, 69, 19, 0.08);
+        position: relative;
+        margin-bottom: 2rem;
+      }
+      
+      .search-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brown-primary), var(--brown-light), var(--brown-primary));
+        border-radius: 12px 12px 0 0;
+      }
+      
+      .search-card h5 {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        padding-top: 0.5rem;
+      }
+      
+      .form-control {
+        border: 2px solid #e0d5c7;
+        border-radius: 8px;
+        padding: 0.75rem;
+        color: var(--brown-primary);
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+      
+      .form-control:focus {
+        border-color: var(--brown-primary);
+        box-shadow: 0 0 0 0.2rem rgba(139, 69, 19, 0.15);
+      }
+      
+      .form-control::placeholder {
+        color: #c0a98f;
+      }
+      
+      .form-label {
+        color: var(--brown-dark);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+      
+      .btn-dark {
+        background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-primary) 100%);
+        border: none;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+        font-size: 1rem;
+      }
+      
+      .btn-dark:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 16px rgba(139, 69, 19, 0.3);
+      }
+      
+      /* Order Cards */
+      .order-card {
+        background: white;
+        border: 2px solid #e0d5c7;
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1rem;
+        box-shadow: 0 4px 6px rgba(139, 69, 19, 0.08);
+        transition: all 0.3s ease;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .order-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, var(--brown-primary), var(--brown-light), var(--brown-primary));
+      }
+      
+      .order-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 8px 20px rgba(139, 69, 19, 0.15);
+      }
+      
+      .order-id {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.25rem;
+        color: var(--brown-dark);
+        margin-bottom: 0.5rem;
+      }
+      
+      .order-date {
+        color: var(--brown-primary);
+        font-size: 0.9rem;
+        margin-bottom: 0.75rem;
+      }
+      
+      .order-amount {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.5rem;
+        color: var(--brown-dark);
+        margin-bottom: 0.5rem;
+      }
+      
+      .order-status {
+        display: inline-block;
+        padding: 0.35rem 1rem;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        background: linear-gradient(135deg, var(--brown-light) 0%, var(--brown-primary) 100%);
+        color: var(--cream);
+        box-shadow: 0 2px 6px rgba(139, 69, 19, 0.2);
+      }
+      
+      .order-status.pending {
+        background: linear-gradient(135deg, #ffc107 0%, #ff9800 100%);
+      }
+      
+      .order-status.paid {
+        background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      }
+      
+      .order-status.shipped {
+        background: linear-gradient(135deg, #17a2b8 0%, #138496 100%);
+      }
+      
+      .order-status.completed {
+        background: linear-gradient(135deg, #6f42c1 0%, #563d7c 100%);
+      }
+      
+      .alert-warning {
+        background: linear-gradient(135deg, #fff3cd 0%, #ffe5a1 100%);
+        border: 2px solid #ffc107;
+        color: #856404;
+        border-radius: 12px;
+        padding: 1.25rem;
+        font-weight: 500;
+      }
+      
+      .alert-warning::before {
+        content: '⚠️ ';
+        font-size: 1.5rem;
+        margin-right: 0.5rem;
+      }
+      
+      .empty-state {
+        text-align: center;
+        padding: 3rem 1rem;
+        color: var(--brown-primary);
+      }
+      
+      .empty-state svg {
+        width: 120px;
+        height: 120px;
+        margin-bottom: 1.5rem;
+        opacity: 0.5;
+      }
+      
+      .empty-state h4 {
+        color: var(--brown-dark);
+        margin-bottom: 1rem;
+      }
+      
+      @media (max-width: 767px) {
+        .page-header {
+          padding: 2rem 0;
+        }
+        
+        .page-header h1 {
+          font-size: 1.75rem;
+        }
+        
+        .page-header p {
+          font-size: 1rem;
+        }
+        
+        .search-card {
+          padding: 1.5rem;
+        }
+        
+        .search-card h5 {
+          font-size: 1.25rem;
+        }
+        
+        .btn-dark {
+          padding: 0.6rem 1.5rem;
+          font-size: 0.95rem;
+        }
+        
+        .order-card {
+          padding: 1.25rem;
+        }
+        
+        .order-id {
+          font-size: 1.1rem;
+        }
+        
+        .order-amount {
+          font-size: 1.25rem;
+        }
+        
+        .order-info {
+          flex-direction: column !important;
+          gap: 1rem !important;
+        }
+        
+        .order-left, .order-right {
+          text-align: center !important;
+        }
+      }
+      
+      footer {
+        background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-primary) 100%);
+        color: var(--cream);
+        padding: 2rem 0;
+      }
+      
+      footer a {
+        color: var(--cream);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      footer a:hover {
+        color: #fff;
+      }
+    </style>
   </head>
-  <body class="bg-light d-flex flex-column min-vh-100">
-    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
       <div class="container">
-        <a class="navbar-brand fw-bold" href="/">Vị Miên</a>
+        <a class="navbar-brand" href="/">Vị Miên</a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -21,7 +385,6 @@
           <ul class="navbar-nav me-auto">
             <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
             <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
-            <li class="nav-item"><a class="nav-link" href="/loyalty.html">Vị Miên Member</a></li>
             <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -37,47 +400,107 @@
         </div>
       </div>
     </nav>
+    
     <main class="flex-fill">
+      <section class="page-header">
+        <div class="container">
+          <h1>Tra cứu đơn hàng</h1>
+          <p>Nhập thông tin để kiểm tra trạng thái đơn hàng của bạn</p>
+        </div>
+      </section>
 
-<section class="py-5">
-  <div class="container">
-    <h1 class="mb-4">Tra cứu đơn hàng</h1>
-    <form class="row g-3">
-      <div class="col-md-5"><input class="form-control" placeholder="Số điện thoại" id="in-phone"></div>
-      <div class="col-md-5"><input class="form-control" placeholder="Email" id="in-email"></div>
-      <div class="col-md-2 d-grid"><button class="btn btn-dark" id="btn-find">Tra cứu</button></div>
-    </form>
-    <div id="results" class="mt-4"></div>
-  </div>
-</section>
-<script src="/assets/js/orders.js"></script>
-<script>
+      <section class="pb-5">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8">
+              <div class="search-card">
+                <h5>🔍 Tìm kiếm đơn hàng</h5>
+                <form class="row g-3">
+                  <div class="col-md-6">
+                    <label class="form-label">Số điện thoại</label>
+                    <input class="form-control" placeholder="Nhập số điện thoại" id="in-phone" type="tel">
+                  </div>
+                  <div class="col-md-6">
+                    <label class="form-label">Email</label>
+                    <input class="form-control" placeholder="Nhập email" id="in-email" type="email">
+                  </div>
+                  <div class="col-12 d-grid">
+                    <button class="btn btn-dark" id="btn-find" type="submit">Tra cứu đơn hàng</button>
+                  </div>
+                </form>
+              </div>
+
+              <div id="results"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-5">
+      <div class="container d-flex flex-wrap justify-content-between">
+        <div>© 2025 Vị Miên</div>
+        <div><a href="/story.html">Câu chuyện</a></div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/cart.js"></script>
+    <script src="/assets/js/orders.js"></script>
+    
+    <script>
 document.getElementById('btn-find').onclick = (e) => {
   e.preventDefault();
   const phone = document.getElementById('in-phone').value.trim();
   const email = document.getElementById('in-email').value.trim();
   const list = Orders.search({ phone, email });
   const box = document.getElementById('results');
-  if (!list.length) { box.innerHTML = '<div class="alert alert-warning">Không tìm thấy đơn (demo chỉ tra trong thiết bị này).</div>'; return; }
-  box.innerHTML = list.map(o => `
-    <div class="card mb-2">
-      <div class="card-body d-flex justify-content-between">
-        <div><b>${o.id}</b><br><span class="text-muted">${new Date(o.created_at).toLocaleString()}</span></div>
-        <div>${formatVND(o.amount)}<br><span class="badge bg-secondary">${o.status}</span></div>
+  
+  if (!list.length) { 
+    box.innerHTML = `
+      <div class="alert alert-warning">
+        Không tìm thấy đơn hàng phù hợp với thông tin bạn cung cấp.
+        <br><small>Lưu ý: Demo chỉ tra cứu đơn hàng được lưu trên thiết bị này.</small>
       </div>
-    </div>`).join('');
+    `;
+    return;
+  }
+  
+  box.innerHTML = list.map(o => {
+    const statusClass = o.status.toLowerCase();
+    const statusText = {
+      'pending': 'Chờ xử lý',
+      'paid': 'Đã thanh toán',
+      'shipped': 'Đang giao',
+      'completed': 'Hoàn thành'
+    }[o.status] || o.status;
+    
+    return `
+      <div class="order-card">
+        <div class="order-info d-flex justify-content-between align-items-start">
+          <div class="order-left">
+            <div class="order-id">#${o.id}</div>
+            <div class="order-date">
+              📅 ${new Date(o.created_at).toLocaleString('vi-VN', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+              })}
+            </div>
+          </div>
+          <div class="order-right text-end">
+            <div class="order-amount">${formatVND(o.amount)}</div>
+            <span class="order-status ${statusClass}">${statusText}</span>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
 };
-</script>
-    </main>
-    <footer class="mt-5 py-4 bg-white border-top">
-      <div class="container d-flex flex-wrap justify-content-between">
-        <div>© 2025 Vị Miên</div>
-        <div><a href="/story.html" class="text-decoration-none">Câu chuyện</a> · <a href="/loyalty.html" class="text-decoration-none">Member</a></div>
-      </div>
-    </footer>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="/assets/js/utils.js"></script>
-    <script src="/assets/js/auth.js"></script>
-    <script src="/assets/js/cart.js"></script>
+    </script>
   </body>
 </html>

@@ -12,24 +12,21 @@
     <style>
       :root {
         --brown-primary: #8B4513;
-        --brown-secondary: #A0522D;
-        --brown-light: #D2B48C;
-        --cream: #FFF8DC;
-        --beige: #F5F5DC;
-        --brown-dark: #654321;
+        --brown-dark: #5C2E0F;
+        --brown-light: #A0522D;
+        --cream: #FFF8E7;
+        --beige: #F5E6D3;
       }
-
+      
       body {
         font-family: 'Lora', serif;
-        background-color: var(--beige);
-        color: #333;
+        background-color: var(--cream);
       }
-
-      h1, h2, h3, h4, h5, h6 {
+      
+      h1, h2, h3, h4, h5, h6, .navbar-brand {
         font-family: 'Playfair Display', serif;
-        color: var(--brown-dark);
       }
-
+      
       /* Custom Navbar */
       .navbar-custom {
         background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-dark) 100%);
@@ -94,84 +91,112 @@
         background-color: var(--brown-primary);
         color: #fff;
       }
+      
       /* Hero Section */
       .hero-section {
-        background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-secondary) 100%);
-        color: white;
-        padding: 5rem 0 4rem;
-        position: relative;
-        overflow: hidden;
+        background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+        padding: 5rem 0;
+        text-align: center;
       }
-
-      .hero-section::before {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-        opacity: 0.3;
-      }
-
-      .hero-section .container {
-        position: relative;
-        z-index: 1;
-      }
-
-      .hero-title {
-        font-size: 3.5rem;
+      
+      .hero-section h1 {
+        color: var(--brown-dark);
         font-weight: 700;
         margin-bottom: 1.5rem;
-        color: white;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
       }
-
-      .hero-subtitle {
-        font-size: 1.5rem;
-        font-style: italic;
-        opacity: 0.95;
-        line-height: 1.8;
+      
+      .hero-section .lead {
+        color: var(--brown-primary);
+        font-size: 1.25rem;
       }
-
+      
+      /* Buttons */
+      .btn-brown {
+        background-color: var(--brown-primary);
+        color: var(--cream);
+        border: none;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-brown:hover {
+        background-color: var(--brown-dark);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+      }
+      
+      .btn-outline-brown {
+        border: 2px solid var(--brown-primary);
+        color: var(--brown-primary);
+        background: transparent;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-outline-brown:hover {
+        background-color: var(--brown-primary);
+        color: var(--cream);
+        transform: translateY(-2px);
+      }
+      
       /* Story Cards */
       .story-card {
         background: white;
+        border: 1px solid #e0d5c7;
         border-radius: 8px;
-        padding: 2.5rem;
-        box-shadow: 0 4px 12px rgba(139, 69, 19, 0.1);
+        padding: 2rem;
         transition: all 0.3s ease;
         height: 100%;
-        border: 1px solid rgba(139, 69, 19, 0.1);
       }
-
+      
       .story-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 8px 24px rgba(139, 69, 19, 0.15);
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(139, 69, 19, 0.15);
       }
-
+      
       .story-card h3 {
-        color: var(--brown-primary);
-        font-size: 1.75rem;
-        margin-bottom: 1.25rem;
+        color: var(--brown-dark);
         font-weight: 600;
+        margin-bottom: 1rem;
+        font-size: 1.5rem;
       }
-
-      .story-card p {
-        font-size: 1.1rem;
+      
+      .story-card p, .story-card ul {
+        color: var(--brown-primary);
+        font-size: 1.05rem;
         line-height: 1.8;
-        color: #555;
-        margin-bottom: 0;
       }
-
-      /* Quote Section */
+      
+      /* Sections */
+      .section-title {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 2rem;
+        position: relative;
+        display: inline-block;
+      }
+      
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--brown-primary);
+      }
+      
+      /* Updated quote section to match index.html white section style */
       .quote-section {
-        background: var(--cream);
+        background: white;
         padding: 4rem 0;
-        border-top: 3px solid var(--brown-light);
-        border-bottom: 3px solid var(--brown-light);
       }
-
+      
       .quote-text {
         font-size: 1.75rem;
         font-style: italic;
@@ -181,7 +206,7 @@
         position: relative;
         padding: 0 3rem;
       }
-
+      
       .quote-text::before,
       .quote-text::after {
         content: '"';
@@ -190,73 +215,70 @@
         position: absolute;
         font-family: 'Playfair Display', serif;
       }
-
+      
       .quote-text::before {
         top: -1rem;
         left: 0;
       }
-
+      
       .quote-text::after {
         bottom: -2rem;
         right: 0;
       }
-
-      /* Mission Section */
+      
+      /* Updated mission section to match index.html gradient section style */
       .mission-section {
-        background: linear-gradient(135deg, var(--brown-secondary) 0%, var(--brown-primary) 100%);
-        color: white;
+        background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
         padding: 4rem 0;
-        text-align: center;
       }
-
+      
       .mission-section h2 {
-        color: white;
+        color: var(--brown-dark);
         font-size: 2.5rem;
         margin-bottom: 1.5rem;
+        font-weight: 700;
+        text-align: center;
       }
-
+      
       .mission-section p {
+        color: var(--brown-primary);
         font-size: 1.25rem;
         line-height: 1.8;
         max-width: 800px;
         margin: 0 auto;
-        opacity: 0.95;
+        text-align: center;
       }
-
+      
       /* Footer */
       footer {
-        background: white;
-        border-top: 2px solid var(--brown-light);
+        background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-primary) 100%);
+        color: var(--cream);
         padding: 2rem 0;
-        margin-top: 0;
       }
-
+      
       footer a {
-        color: var(--brown-primary);
+        color: var(--cream);
+        text-decoration: none;
         transition: color 0.3s ease;
       }
-
+      
       footer a:hover {
-        color: var(--brown-secondary);
+        color: #fff;
       }
-
+      
       /* Responsive */
       @media (max-width: 768px) {
-        .hero-title {
+        .hero-section h1 {
           font-size: 2.5rem;
         }
-
-        .hero-subtitle {
-          font-size: 1.25rem;
-        }
-
+        
         .quote-text {
           font-size: 1.35rem;
           padding: 0 2rem;
         }
-
+        
         .story-card {
-          padding: 2rem;
+          padding: 1.5rem;
         }
       }
     </style>
@@ -272,7 +294,6 @@
           <ul class="navbar-nav me-auto">
             <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
             <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
-            <li class="nav-item"><a class="nav-link" href="/loyalty.html">Vị Miên Member</a></li>
             <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
           </ul>
           <ul class="navbar-nav ms-auto">
@@ -289,21 +310,25 @@
       </div>
     </nav>
 
-    <section class="hero-section">
-      <div class="container text-center">
-        <h1 class="hero-title">Câu chuyện Vị Miên</h1>
-        <p class="hero-subtitle">Dịu ngọt như mật hoa, thanh tao như trà xanh</p>
-      </div>
-    </section>
- 
     <main class="flex-fill">
-       Origin Story 
+      <!-- Simplified hero section to match index.html style -->
+      <section class="hero-section">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+              <h1 class="display-4">Câu chuyện Vị Miên</h1>
+              <p class="lead">Dịu ngọt như mật hoa, thanh tao như trà xanh</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section class="py-5">
         <div class="container">
-          <div class="row justify-content-center mb-5">
+          <h2 class="section-title">Khởi nguồn</h2>
+          <div class="row justify-content-center mt-4">
             <div class="col-lg-10">
               <div class="story-card">
-                <h3>Khởi nguồn</h3>
                 <p>
                   Mang trong mình câu chuyện về những phút giây "dịu ngọt như mật hoa", Vị Miên sinh ra từ niềm đam mê ẩm thực Việt hiện đại. 
                   Vị Miên nuôi dưỡng đam mê khám phá hương vị Việt: từ những vườn trái cây nhiệt đới cho đến lá trà xanh mộc mạc.
@@ -311,9 +336,14 @@
               </div>
             </div>
           </div>
+        </div>
+      </section>
 
-        
-          <div class="row g-4 mb-5">
+      <!-- Added white background section to match index.html pattern -->
+      <section class="py-5 bg-white">
+        <div class="container">
+          <h2 class="section-title">Giá trị cốt lõi</h2>
+          <div class="row g-4 mt-3">
             <div class="col-md-4">
               <div class="story-card">
                 <h3>Nghệ thuật</h3>
@@ -342,7 +372,6 @@
         </div>
       </section>
 
-    
       <section class="quote-section">
         <div class="container">
           <div class="row justify-content-center">
@@ -355,7 +384,6 @@
         </div>
       </section>
 
- 
       <section class="mission-section">
         <div class="container">
           <h2>Sứ mệnh</h2>
@@ -366,14 +394,13 @@
         </div>
       </section>
 
-      
       <section class="py-5">
         <div class="container">
           <div class="row g-4">
             <div class="col-md-6">
               <div class="story-card">
-                <h3>Giá trị cốt lõi</h3>
-                <ul class="mb-0" style="font-size: 1.1rem; line-height: 2;">
+                <h3>Giá trị của chúng tôi</h3>
+                <ul class="mb-0">
                   <li>Tinh tế & tử tế trong từng sản phẩm</li>
                   <li>Bền vững & trách nhiệm với cộng đồng</li>
                   <li>Sáng tạo & truyền cảm hứng mỗi ngày</li>
@@ -394,13 +421,12 @@
       </section>
     </main>
 
-     Footer 
-    <footer>
+    <footer class="mt-5">
       <div class="container d-flex flex-wrap justify-content-between align-items-center">
-        <div class="text-muted">© 2025 Vị Miên. Tất cả quyền được bảo lưu.</div>
+        <div>© 2025 Vị Miên</div>
         <div>
-          <a href="/story.html" class="text-decoration-none me-3">Câu chuyện</a>
-          <a href="/loyalty.html" class="text-decoration-none">Member</a>
+          <a href="/story.html">Câu chuyện</a>
+    
         </div>
       </div>
     </footer>
