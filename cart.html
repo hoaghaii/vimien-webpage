@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vị Miên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body class="bg-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Vị Miên</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="/loyalty.html">Vị Miên Member</a></li>
+            <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/cart.html">🛒 <span id="nav-cart-count">0</span></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="nav-user-label">Tài khoản</a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/account.html">Đăng nhập / Đăng ký</a></li>
+                <li><a class="dropdown-item" href="#" id="btn-logout">Đăng xuất</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="flex-fill">
+
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-4">Giỏ hàng & Thanh toán</h1>
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="table-responsive">
+          <table class="table align-middle">
+            <thead><tr><th>Sản phẩm</th><th>SL</th><th>Giá</th><th></th></tr></thead>
+            <tbody id="cart-body"></tbody>
+          </table>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="p-3 bg-white border rounded-3">
+          <h5>Tóm tắt</h5>
+          <div class="d-flex justify-content-between"><span>Tạm tính</span><span id="subtotal">0</span></div>
+          <hr>
+          <div class="mb-3">
+            <label class="form-label">Phương thức thanh toán</label>
+            <select class="form-select" id="payment-method">
+              <option value="COD">COD (Thanh toán khi nhận)</option>
+              <option value="QR">QR Banking</option>
+            </select>
+          </div>
+          <div id="qr-box" class="text-center d-none">
+            <div id="qrcode" class="d-inline-block mb-2"></div>
+            <p class="small text-muted mb-2">Quét QR để chuyển khoản (demo)</p>
+            <button class="btn btn-outline-dark btn-sm" id="btn-paid">Tôi đã chuyển</button>
+          </div>
+          <button class="btn btn-dark w-100 mt-3" id="btn-checkout">Đặt hàng</button>
+          <div id="checkout-result" class="mt-3"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script src="/assets/js/orders.js"></script>
+<script>
+function renderCart() {
+  const items = CartApi.getItems();
+  const body = document.getElementById('cart-body');
+  body.innerHTML = '';
+  let sum = 0;
+  items.forEach((it, idx) => {
+    sum += it.price * it.qty;
+    body.insertAdjacentHTML('beforeend', `
+      <tr>
+        <td class="d-flex align-items-center gap-2"><img src="${it.image}" width="48" class="rounded"> ${it.name}</td>
+        <td>
+          <div class="input-group input-group-sm" style="max-width:120px">
+            <button class="btn btn-outline-secondary" data-idx="${idx}" data-action="dec">-</button>
+            <input class="form-control text-center" value="${it.qty}" readonly>
+            <button class="btn btn-outline-secondary" data-idx="${idx}" data-action="inc">+</button>
+          </div>
+        </td>
+        <td>${formatVND(it.price*it.qty)}</td>
+        <td><button class="btn btn-sm btn-link text-danger" data-idx="${idx}" data-action="del">X</button></td>
+      </tr>`);
+  });
+  document.getElementById('subtotal').innerText = formatVND(sum);
+  body.querySelectorAll('button').forEach(btn => {
+    btn.onclick = () => {
+      const idx = +btn.dataset.idx;
+      const act = btn.dataset.action;
+      if (act === 'inc') CartApi.updateQty(idx, +1);
+      if (act === 'dec') CartApi.updateQty(idx, -1);
+      if (act === 'del') CartApi.remove(idx);
+      renderCart(); updateNavCartCount();
+    };
+  });
+}
+document.addEventListener('DOMContentLoaded', () => {
+  renderCart();
+
+  const methodEl = document.getElementById('payment-method');
+  const qrBox = document.getElementById('qr-box');
+  methodEl.onchange = () => {
+    qrBox.classList.toggle('d-none', methodEl.value !== 'QR');
+    if (methodEl.value === 'QR') {
+      const total = CartApi.getItems().reduce((s,i)=>s+i.price*i.qty,0);
+      const payload = `VIMIEN|AMOUNT=${total}|MSG=ORDER`;
+      document.getElementById('qrcode').innerHTML='';
+      new QRCode(document.getElementById('qrcode'), payload);
+    }
+  };
+
+  document.getElementById('btn-checkout').onclick = () => {
+    const user = Auth.currentUser();
+    const contact = user ? { email: user.email, phone: user.phone || '' } : { email: '', phone: '' };
+    const payment = methodEl.value;
+    const order = Orders.createFromCart({ payment, contact });
+    CartApi.clear();
+    renderCart(); updateNavCartCount();
+
+    const res = document.getElementById('checkout-result');
+    res.innerHTML = `<div class="alert alert-success">Đã tạo đơn ${order.id} — trạng thái: <b>${order.status}</b></div>`;
+    if (payment === 'QR') {
+      document.getElementById('qr-box').classList.remove('d-none');
+      const payload = `VIMIEN|AMOUNT=${order.amount}|MSG=ORDER_${order.id}`;
+      document.getElementById('qrcode').innerHTML='';
+      new QRCode(document.getElementById('qrcode'), payload);
+    } else {
+      document.getElementById('qr-box').classList.add('d-none');
+    }
+  };
+
+  document.getElementById('btn-paid').onclick = () => {
+    const last = Orders.last();
+    if (!last) return toast('Chưa có đơn.');
+    Orders.markPaid(last.id);
+    document.getElementById('checkout-result').innerHTML = `<div class="alert alert-info">Đơn ${last.id} đã chuyển trạng thái: <b>paid (demo)</b></div>`;
+  };
+});
+</script>
+    </main>
+    <footer class="mt-5 py-4 bg-white border-top">
+      <div class="container d-flex flex-wrap justify-content-between">
+        <div>© 2025 Vị Miên</div>
+        <div><a href="/story.html" class="text-decoration-none">Câu chuyện</a> · <a href="/loyalty.html" class="text-decoration-none">Member</a></div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/cart.js"></script>
+  </body>
+</html>

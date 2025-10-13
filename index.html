@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vị Miên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brown-primary: #8B4513;
+        --brown-dark: #5C2E0F;
+        --brown-light: #A0522D;
+        --cream: #FFF8E7;
+        --beige: #F5E6D3;
+      }
+      
+      body {
+        font-family: 'Lora', serif;
+        background-color: var(--cream);
+      }
+      
+      h1, h2, h3, h4, h5, h6, .navbar-brand {
+        font-family: 'Playfair Display', serif;
+      }
+      
+      /* Custom Navbar */
+      .navbar-custom {
+        background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-dark) 100%);
+        padding: 1rem 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      
+      .navbar-custom .navbar-brand {
+        color: var(--cream);
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      
+      .navbar-custom .nav-link {
+        color: var(--cream);
+        font-weight: 500;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .navbar-custom .nav-link:hover {
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      
+      .navbar-custom .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: var(--cream);
+        transition: width 0.3s ease;
+      }
+      
+      .navbar-custom .nav-link:hover::after {
+        width: 80%;
+      }
+      
+      .navbar-custom .navbar-toggler {
+        border-color: var(--cream);
+      }
+      
+      .navbar-custom .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFF8E7' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+      
+      .dropdown-menu {
+        background-color: var(--brown-dark);
+        border: none;
+      }
+      
+      .dropdown-item {
+        color: var(--cream);
+      }
+      
+      .dropdown-item:hover {
+        background-color: var(--brown-primary);
+        color: #fff;
+      }
+      
+      /* Hero Section */
+      .hero-section {
+        background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+        padding: 5rem 0;
+      }
+      
+      .hero-section h1 {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+      }
+      
+      .hero-section .lead {
+        color: var(--brown-primary);
+        font-size: 1.25rem;
+      }
+      
+      .hero-image {
+        background: linear-gradient(135deg, var(--brown-light) 0%, var(--brown-primary) 100%);
+        border-radius: 8px;
+        box-shadow: 0 8px 24px rgba(139, 69, 19, 0.2);
+      }
+      
+      /* Buttons */
+      .btn-brown {
+        background-color: var(--brown-primary);
+        color: var(--cream);
+        border: none;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-brown:hover {
+        background-color: var(--brown-dark);
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(139, 69, 19, 0.3);
+      }
+      
+      .btn-outline-brown {
+        border: 2px solid var(--brown-primary);
+        color: var(--brown-primary);
+        background: transparent;
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+      }
+      
+      .btn-outline-brown:hover {
+        background-color: var(--brown-primary);
+        color: var(--cream);
+        transform: translateY(-2px);
+      }
+      
+      /* Product Cards */
+      .product-card {
+        background: white;
+        border: 1px solid #e0d5c7;
+        border-radius: 8px;
+        overflow: hidden;
+        transition: all 0.3s ease;
+        height: 100%;
+      }
+      
+      .product-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(139, 69, 19, 0.15);
+      }
+      
+      .product-card img {
+        width: 100%;
+        height: 250px;
+        object-fit: cover;
+      }
+      
+      .product-card .card-body {
+        padding: 1.5rem;
+      }
+      
+      .product-card .card-title {
+        color: var(--brown-dark);
+        font-weight: 600;
+        margin-bottom: 0.75rem;
+      }
+      
+      .product-card .card-text {
+        color: var(--brown-primary);
+        font-weight: 600;
+        font-size: 1.1rem;
+      }
+      
+      /* Sections */
+      .section-title {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 2rem;
+        position: relative;
+        display: inline-block;
+      }
+      
+      .section-title::after {
+        content: '';
+        position: absolute;
+        bottom: -10px;
+        left: 0;
+        width: 60px;
+        height: 3px;
+        background: var(--brown-primary);
+      }
+      
+      .story-section {
+        background: white;
+        padding: 4rem 0;
+      }
+      
+      .story-section p {
+        color: var(--brown-primary);
+        font-size: 1.1rem;
+        line-height: 1.8;
+      }
+      
+      /* Footer */
+      footer {
+        background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-primary) 100%);
+        color: var(--cream);
+        padding: 2rem 0;
+      }
+      
+      footer a {
+        color: var(--cream);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      footer a:hover {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Vị Miên</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="/loyalty.html">Vị Miên Member</a></li>
+            <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/cart.html">🛒 <span id="nav-cart-count">0</span></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="nav-user-label">Tài khoản</a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/account.html">Đăng nhập / Đăng ký</a></li>
+                <li><a class="dropdown-item" href="#" id="btn-logout">Đăng xuất</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-fill">
+      <section class="hero-section">
+        <div class="container">
+          <div class="row align-items-center g-4">
+            <div class="col-md-6">
+              <h1 class="display-4">Vị Miên — vị ngọt dịu cho từng khoảnh khắc</h1>
+              <p class="lead">Bộ sưu tập mới: thức uống & bánh ngọt lấy cảm hứng từ phong cách sống tích cực.</p>
+              <a href="/products.html" class="btn btn-brown btn-lg">Khám phá sản phẩm</a>
+            </div>
+            <div class="col-md-6">
+              <div class="ratio ratio-16x9 hero-image">
+                <img src="/assets/images/croissant.jpg" alt="Hero Image" class="img-fluid rounded">
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5">
+        <div class="container">
+          <h2 class="section-title">Bộ sưu tập mới</h2>
+          <div class="row g-4 mt-3" id="home-products"></div>
+        </div>
+      </section>
+
+      <section class="story-section">
+        <div class="container">
+          <h2 class="section-title">Câu chuyện thương hiệu</h2>
+          <p class="mt-4">Mang trong mình câu chuyện về những phút giây “dịu ngọt như mật hoa”, Vị Miên sinh ra từ niềm đam mê ẩm thực Việt hiện đại</p>
+          <a href="/story.html" class="btn btn-outline-brown mt-3">Đọc thêm</a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-5">
+      <div class="container d-flex flex-wrap justify-content-between align-items-center">
+        <div>© 2025 Vị Miên</div>
+        <div>
+          <a href="/story.html">Câu chuyện</a> · 
+          <a href="/loyalty.html">Member</a>
+        </div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/data.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/cart.js"></script>
+    
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const wrap = document.getElementById('home-products');
+        const featured = Products.slice(0, 4);
+        featured.forEach(p => {
+          wrap.insertAdjacentHTML('beforeend', `
+            <div class="col-md-3">
+              <div class="product-card">
+                <img src="${p.image}" alt="${p.name}">
+                <div class="card-body d-flex flex-column">
+                  <h5 class="card-title">${p.name}</h5>
+                  <p class="card-text">${formatVND(p.price)}</p>
+                  <a href="/product.html?id=${p.id}" class="btn btn-brown mt-auto">Xem chi tiết</a>
+                </div>
+              </div>
+            </div>`);
+        });
+      });
+    </script>
+  </body>
+</html>

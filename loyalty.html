@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vị Miên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body class="bg-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Vị Miên</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="/loyalty.html">Vị Miên Member</a></li>
+            <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/cart.html">🛒 <span id="nav-cart-count">0</span></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="nav-user-label">Tài khoản</a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/account.html">Đăng nhập / Đăng ký</a></li>
+                <li><a class="dropdown-item" href="#" id="btn-logout">Đăng xuất</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="flex-fill">
+
+<section class="py-5">
+  <div class="container">
+    <h1 class="mb-4">Vị Miên Member</h1>
+    <div class="row g-4">
+      <div class="col-lg-8">
+        <div class="p-3 bg-white border rounded-3">
+          <h5>Điểm & Hạng của bạn</h5>
+          <div id="loy-info" class="mb-3"></div>
+          <div class="input-group mb-3" style="max-width:360px">
+            <input class="form-control" id="redeem-value" placeholder="Giá trị voucher (VNĐ)">
+            <button class="btn btn-dark" id="btn-redeem">Đổi E‑Voucher</button>
+          </div>
+          <div id="redeem-result"></div>
+        </div>
+      </div>
+      <div class="col-lg-4">
+        <div class="p-3 bg-white border rounded-3">
+          <h5>Hạng thành viên</h5>
+          <ul class="small mb-0">
+            <li>Base</li>
+            <li>Bạc</li>
+            <li>Vàng</li>
+            <li>Bạch Kim</li>
+          </ul>
+          <hr>
+          <p class="small mb-1">Đăng ký qua Zalo OA:</p>
+          <a class="btn btn-outline-success btn-sm" href="https://zalo.me" target="_blank">Mở Zalo OA (demo)</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<script src="/assets/js/orders.js"></script>
+<script src="/assets/js/loyalty.js"></script>
+    </main>
+    <footer class="mt-5 py-4 bg-white border-top">
+      <div class="container d-flex flex-wrap justify-content-between">
+        <div>© 2025 Vị Miên</div>
+        <div><a href="/story.html" class="text-decoration-none">Câu chuyện</a> · <a href="/loyalty.html" class="text-decoration-none">Member</a></div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/cart.js"></script>
+  </body>
+</html>

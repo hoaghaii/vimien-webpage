@@ -1,0 +1,103 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Vị Miên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </head>
+  <body class="bg-light d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg bg-white border-bottom sticky-top">
+      <div class="container">
+        <a class="navbar-brand fw-bold" href="/">Vị Miên</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="/loyalty.html">Vị Miên Member</a></li>
+            <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/cart.html">🛒 <span id="nav-cart-count">0</span></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="nav-user-label">Tài khoản</a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/account.html">Đăng nhập / Đăng ký</a></li>
+                <li><a class="dropdown-item" href="#" id="btn-logout">Đăng xuất</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <main class="flex-fill">
+
+<section class="py-5">
+  <div class="container" id="product-detail"></div>
+</section>
+
+<script src="/assets/js/data.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const params = new URLSearchParams(location.search);
+  const id = params.get('id');
+  const p = Products.find(x => String(x.id) === String(id));
+  const el = document.getElementById('product-detail');
+  if (!p) { el.innerHTML = '<p>Không tìm thấy sản phẩm.</p>'; return; }
+
+  el.innerHTML = `
+    <div class="row g-4">
+      <div class="col-md-6"><img src="${p.image}" class="img-fluid rounded" alt="${p.name}"></div>
+      <div class="col-md-6">
+        <h1>${p.name}</h1>
+        <p class="text-muted">${formatVND(p.price)}</p>
+        <p>${p.description}</p>
+        <div class="mb-3">
+          <label class="form-label">Kích cỡ</label>
+          <select class="form-select" id="opt-size">
+            <option value="M">M</option>
+            <option value="L">L (+10%)</option>
+          </select>
+        </div>
+        <div class="d-flex gap-2">
+          <button class="btn btn-dark" id="btn-add">Thêm vào giỏ</button>
+          <button class="btn btn-outline-secondary" id="btn-share">Chia sẻ</button>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById('btn-add').onclick = () => {
+    const size = document.getElementById('opt-size').value;
+    const price = size === 'L' ? Math.round(p.price*1.1) : p.price;
+    CartApi.addItem({ id: p.id, name: p.name + ' - ' + size, price, qty: 1, image: p.image });
+    toast('Đã thêm vào giỏ!');
+    updateNavCartCount();
+  };
+
+  document.getElementById('btn-share').onclick = async () => {
+    const shareData = { title: p.name, text: p.description, url: location.href };
+    if (navigator.share) { await navigator.share(shareData); }
+    else { navigator.clipboard.writeText(location.href); toast('Đã copy link!'); }
+  };
+});
+</script>
+    </main>
+    <footer class="mt-5 py-4 bg-white border-top">
+      <div class="container d-flex flex-wrap justify-content-between">
+        <div>© 2025 Vị Miên</div>
+        <div><a href="/story.html" class="text-decoration-none">Câu chuyện</a> · <a href="/loyalty.html" class="text-decoration-none">Member</a></div>
+      </div>
+    </footer>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/cart.js"></script>
+  </body>
+</html>
