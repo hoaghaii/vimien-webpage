@@ -1,0 +1,460 @@
+<!doctype html>
+<html lang="vi">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Tin tức - Vị Miên</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" href="data:,">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Lora:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+      :root {
+        --brown-primary: #1B5E3E;
+        --brown-dark: #0F3325;
+        --brown-light: #2D7A4F;
+        --cream: #E8F3ED;
+        --beige: #D4E7DD;
+      }
+      
+      body {
+        font-family: 'Lora', serif;
+        background-color: var(--cream);
+      }
+      
+      h1, h2, h3, h4, h5, h6, .navbar-brand {
+        font-family: 'Playfair Display', serif;
+      }
+      
+      /* Custom Navbar */
+      .navbar-custom {
+        background: linear-gradient(135deg, var(--brown-primary) 0%, var(--brown-dark) 100%);
+        padding: 1rem 0;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      }
+      
+      .navbar-custom .navbar-brand {
+        color: var(--cream);
+        font-size: 1.75rem;
+        font-weight: 700;
+        letter-spacing: 1px;
+      }
+      
+      .navbar-custom .nav-link {
+        color: var(--cream);
+        font-weight: 500;
+        margin: 0 0.5rem;
+        transition: all 0.3s ease;
+        position: relative;
+      }
+      
+      .navbar-custom .nav-link:hover {
+        color: #fff;
+        transform: translateY(-2px);
+      }
+      
+      .navbar-custom .nav-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 0;
+        height: 2px;
+        background: var(--cream);
+        transition: width 0.3s ease;
+      }
+      
+      .navbar-custom .nav-link:hover::after {
+        width: 80%;
+      }
+      
+      .navbar-custom .navbar-toggler {
+        border-color: var(--cream);
+      }
+      
+      .navbar-custom .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='%23FFF8E7' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+      
+      .dropdown-menu {
+        background-color: var(--brown-dark);
+        border: none;
+      }
+      
+      .dropdown-item {
+        color: var(--cream);
+      }
+      
+      .dropdown-item:hover {
+        background-color: var(--brown-primary);
+        color: #fff;
+      }
+      
+      .page-header {
+        background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+        padding: 4rem 0;
+        margin-bottom: 3rem;
+        position: relative;
+        overflow: hidden;
+      }
+      
+      .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-image: 
+          repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(139, 69, 19, 0.03) 35px, rgba(139, 69, 19, 0.03) 70px);
+        pointer-events: none;
+      }
+      
+      .page-header .container {
+        position: relative;
+        z-index: 1;
+      }
+      
+      .page-header h1 {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+        text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.5);
+      }
+      
+      .page-header p {
+        color: var(--brown-primary);
+        font-size: 1.1rem;
+      }
+      
+      .decorative-divider {
+        width: 80px;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brown-primary), var(--brown-light));
+        margin: 0 auto 3rem;
+        border-radius: 2px;
+        box-shadow: 0 2px 4px rgba(139, 69, 19, 0.2);
+      }
+      
+      .news-card {
+        background: white;
+        border: 2px solid #e0d5c7;
+        border-radius: 12px;
+        overflow: hidden;
+        transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        margin-bottom: 2rem;
+        position: relative;
+        box-shadow: 0 4px 6px rgba(139, 69, 19, 0.08);
+      }
+      
+      .news-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--brown-primary), var(--brown-light), var(--brown-primary));
+        opacity: 0;
+        transition: opacity 0.3s ease;
+      }
+      
+      .news-card:hover::before {
+        opacity: 1;
+      }
+      
+      .news-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 16px 32px rgba(139, 69, 19, 0.2);
+        border-color: var(--brown-light);
+      }
+      
+      .news-card .image-wrapper {
+        position: relative;
+        overflow: hidden;
+        height: 350px;
+        background: linear-gradient(135deg, var(--beige) 0%, var(--cream) 100%);
+      }
+      
+      .news-card img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.4s ease;
+      }
+      
+      .news-card:hover img {
+        transform: scale(1.05);
+      }
+      
+      .news-card .card-body {
+        padding: 2rem;
+        background: linear-gradient(to bottom, white 0%, rgba(255, 248, 231, 0.3) 100%);
+      }
+      
+      .news-date {
+        color: var(--brown-light);
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+      
+      .news-card .card-title {
+        color: var(--brown-dark);
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+        font-size: 1.75rem;
+        line-height: 1.3;
+      }
+      
+      .news-content {
+        color: #333;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+      }
+      
+      .news-content p {
+        margin-bottom: 1rem;
+      }
+      
+      .news-content strong {
+        color: var(--brown-dark);
+      }
+      
+      .news-hashtags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1.5rem;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e0d5c7;
+      }
+      
+      .hashtag {
+        background: var(--beige);
+        color: var(--brown-primary);
+        padding: 0.4rem 0.8rem;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      
+      .hashtag:hover {
+        background: var(--brown-primary);
+        color: var(--cream);
+        transform: translateY(-2px);
+      }
+      
+      .image-placeholder {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 3rem;
+        color: var(--brown-light);
+      }
+      
+      @media (max-width: 767px) {
+        .page-header {
+          padding: 2.5rem 0;
+        }
+        
+        .page-header h1 {
+          font-size: 2rem;
+        }
+        
+        .page-header p {
+          font-size: 0.95rem;
+        }
+        
+        .news-card .image-wrapper {
+          height: 200px;
+        }
+        
+        .news-card .card-body {
+          padding: 1.25rem;
+        }
+        
+        .news-card .card-title {
+          font-size: 1.35rem;
+        }
+        
+        .news-content {
+          font-size: 0.95rem;
+        }
+        
+        .hashtag {
+          font-size: 0.75rem;
+          padding: 0.3rem 0.6rem;
+        }
+      }
+      
+      footer {
+        background: linear-gradient(135deg, var(--brown-dark) 0%, var(--brown-primary) 100%);
+        color: var(--cream);
+        padding: 2rem 0;
+      }
+      
+      footer a {
+        color: var(--cream);
+        text-decoration: none;
+        transition: color 0.3s ease;
+      }
+      
+      footer a:hover {
+        color: #fff;
+      }
+    </style>
+  </head>
+  <body class="d-flex flex-column min-vh-100">
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+      <div class="container">
+        <a class="navbar-brand" href="/">Vị Miên</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#nav">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="nav">
+          <ul class="navbar-nav me-auto">
+            <li class="nav-item"><a class="nav-link" href="/products.html">Sản phẩm</a></li>
+            <li class="nav-item"><a class="nav-link" href="/story.html">Câu chuyện</a></li>
+            <li class="nav-item"><a class="nav-link" href="/news.html">Tin tức</a></li>
+            <li class="nav-item"><a class="nav-link" href="/order-lookup.html">Tra cứu đơn</a></li>
+          </ul>
+          <ul class="navbar-nav ms-auto">
+            <li class="nav-item"><a class="nav-link" href="/cart.html">🛒 <span id="nav-cart-count">0</span></a></li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" id="nav-user-label">Tài khoản</a>
+              <ul class="dropdown-menu dropdown-menu-end">
+                <li><a class="dropdown-item" href="/account.html">Đăng nhập / Đăng ký</a></li>
+                <li><a class="dropdown-item" href="#" id="btn-logout">Đăng xuất</a></li>
+              </ul>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <main class="flex-fill">
+      <section class="page-header text-center">
+        <div class="container">
+          <h1>Tin tức & Sự kiện</h1>
+          <p>Cập nhật những câu chuyện mới nhất từ Vị Miên</p>
+        </div>
+      </section>
+      
+      <div class="decorative-divider"></div>
+
+      <section class="pb-5">
+        <div class="container">
+          <div class="news-card">
+            <div class="image-wrapper">
+              <div class="image-placeholder">🌿
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="news-date">📆 Đăng ngày: 06/10/2025</div>
+              <h2 class="card-title">Một ngày với Vị Miên – Ly trà êm giữa nhịp sống hối hả</h2>
+              <div class="news-content">
+                <p><em>"Sáng nay, Hà ghé quán Vị Miên như thói quen mỗi thứ Hai. Cô gọi ly 'Miên Trà Xanh Mộc', ngồi lặng yên nhìn những tia nắng đầu ngày len qua khung cửa kính. Giữa dòng người vội vã, chỉ cần hít một hơi hương trà ấm, Hà lại thấy bình yên như được trở về nhà."</em></p>
+                
+                <p>Đối với nhiều người, một ngày không thể thiếu một ly cà phê hay trà sữa, nhưng với Hà – và với chúng tôi – một ngày chưa thật sự bắt đầu nếu thiếu "Vị êm" của Vị Miên.</p>
+                
+                <p><strong>Chúng tôi tin rằng mỗi ly trà đều mang một câu chuyện riêng:</strong> có thể là lời cảm ơn, lời xin lỗi, hay chỉ đơn giản là một phút nghỉ ngơi giữa dòng đời.</p>
+                
+                <p>👉 Nếu bạn có câu chuyện nhỏ cùng Vị Miên, hãy gửi về fanpage hoặc Zalo OA – chúng tôi muốn lắng nghe!</p>
+              </div>
+              <div class="news-hashtags">
+                <span class="hashtag">#ViMien</span>
+                <span class="hashtag">#MotNgayVoiViMien</span>
+                <span class="hashtag">#SongCham</span>
+                <span class="hashtag">#HuongLangDong</span>
+                <span class="hashtag">#TraSuaTuNhien</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="news-card">
+            <div class="image-wrapper">
+              <div class="image-placeholder">🍊</div>
+            </div>
+            <div class="card-body">
+              <div class="news-date">📆 Đăng ngày: 15/10/2025</div>
+              <h2 class="card-title">Nguyên liệu & Nông sản Việt – Khi nông sản Việt sáng bừng trong từng ly Vị Miên</h2>
+              <div class="news-content">
+                <p><em>"Chúng tôi tin rằng vị ngon thật sự bắt đầu từ những điều giản dị. Mỗi lá trà, mỗi quả xoài hay bông nhài được chọn đều mang trong mình hơi thở của đất Việt – nơi nắng và gió hòa quyện, tạo nên hương vị không nơi nào có."</em></p>
+                
+                <p>Vị Miên hợp tác trực tiếp với những nông trại địa phương tại Đà Lạt, Thái Nguyên và Hưng Yên – nơi trái cây được thu hái đúng mùa, đảm bảo tươi – sạch – chuẩn vị.</p>
+                
+                <p><strong>Nhờ đó, mỗi ly "Miên Matcha Mộc" hay "Miên Hoa Nhài Ẩn" không chỉ là một thức uống, mà là câu chuyện của nông sản Việt Nam được tôn vinh và lan tỏa.</strong></p>
+                
+                <p><em>"Chúng tôi không chỉ pha trà – chúng tôi ủ trong đó niềm tự hào Việt."</em></p>
+              </div>
+              <div class="news-hashtags">
+                <span class="hashtag">#ViMien</span>
+                <span class="hashtag">#NongSanViet</span>
+                <span class="hashtag">#TraSuaSach</span>
+                <span class="hashtag">#TraTuNhien</span>
+                <span class="hashtag">#HuongViQueHuong</span>
+                <span class="hashtag">#ViMienSustainable</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="news-card">
+            <div class="image-wrapper">
+              <div class="image-placeholder">🌸</div>
+            </div>
+            <div class="card-body">
+              <div class="news-date">📆 Đăng ngày: 20/10/2025</div>
+              <h2 class="card-title">Đón mùa của nàng cùng "Khúc du Hoa Việt"</h2>
+              <div class="news-content">
+                <p><em>"Tháng Mười về, mang theo những cơn gió dịu dàng và những nụ cười rạng rỡ của phái đẹp. Vị Miên dành tặng bạn – những người phụ nữ Việt Nam xinh đẹp, nhân hậu và kiêu hãnh – bộ sưu tập đặc biệt 'Khúc du Hoa Việt', như một lời tri ân chân thành gửi đến những 'đóa hoa của đời thường'."</em></p>
+                
+                <p>Bộ sưu tập "Khúc du Hoa Việt" là bản hòa ca giữa hương sen thanh, vị nhài tinh tế và chút ngọt mềm của sữa tươi. Mỗi ly trà là một khúc du ca – dịu dàng mà sâu lắng, như chính vẻ đẹp của người phụ nữ Việt: nhẹ nhàng bên ngoài, mạnh mẽ bên trong.</p>
+                
+                <p><strong>💝 Ưu đãi dành riêng cho mùa của nàng:</strong></p>
+                <ul>
+                  <li>🎁 Tặng 1 ly "Miên Hoa Việt" cho tất cả khách hàng nữ vào ngày 20/10</li>
+                  <li>🌷 Hội viên hạng Bạc trở lên: nhận thêm E-Voucher 20.000đ cho đơn hàng tiếp theo</li>
+                  <li>🌼 Hội viên Bạch Kim – MIÊN: tặng set quà "Khúc Hoa Lưu Niệm", gồm 1 ly trà signature + bookmark handmade</li>
+                  <li>🫖 Ưu đãi áp dụng tại toàn bộ cửa hàng & kênh online từ 20/10 đến hết 25/10/2025</li>
+                </ul>
+                
+                <p><em>"Vì mỗi người phụ nữ đều là một đóa hoa – và Vị Miên chỉ muốn gửi thêm chút hương vị để hoa ấy rạng rỡ hơn."</em></p>
+                
+                <p>👉 Đăng nhập tài khoản hội viên tại Zalo OA Vị Miên để nhận ưu đãi ngay hôm nay.</p>
+              </div>
+              <div class="news-hashtags">
+                <span class="hashtag">#ViMien</span>
+                <span class="hashtag">#KhucDuHoaViet</span>
+                <span class="hashtag">#20thang10</span>
+                <span class="hashtag">#PhuNuVietNam</span>
+                <span class="hashtag">#HoiVienViMien</span>
+                <span class="hashtag">#HuongLangDong</span>
+                <span class="hashtag">#TraSuaTuNhien</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="mt-5">
+      <div class="container d-flex flex-wrap justify-content-between">
+        <div>© 2025 Vị Miên</div>
+        <div><a href="/story.html">Câu chuyện</a> · <a href="/loyalty.html">Member</a></div>
+      </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/assets/js/data.js"></script>
+    <script src="/assets/js/utils.js"></script>
+    <script src="/assets/js/auth.js"></script>
+    <script src="/assets/js/cart.js"></script>
+  </body>
+</html>
